@@ -48,7 +48,7 @@ set(LIBBSON_REQUIRED_VERSION 1.25.0)
 set(LIBBSON_REQUIRED_ABI_VERSION 1.0)
 
 set(LIBMONGOC_REQUIRED_VERSION 1.25.0)
-set(LIBMONGOC_DOWNLOAD_VERSION 1.25.0)
+set(LIBMONGOC_DOWNLOAD_VERSION 1.25.3)
 set(LIBMONGOC_REQUIRED_ABI_VERSION 1.0)
 
 set(NEED_ONLY_DRIVER_CODE true)
@@ -78,8 +78,8 @@ if(NEED_DOWNLOAD_C_DRIVER)
     # Declare mongo-c-driver as a dependency
     FetchContent_Declare(
         mongo-c-driver
-        GIT_REPOSITORY https://github.com/mongodb/mongo-c-driver.git
-        GIT_TAG ${LIBMONGOC_DOWNLOAD_VERSION}
+        GIT_REPOSITORY https://github.com/Dargun/mongo-c-driver.git
+        GIT_TAG "scully-${LIBMONGOC_DOWNLOAD_VERSION}"
     )
 
     FetchContent_GetProperties(mongo-c-driver)
@@ -107,6 +107,12 @@ if(NEED_DOWNLOAD_C_DRIVER)
             set(ENABLE_SHARED OFF)
             set(ENABLE_STATIC ON)
         endif()
+        set(ENABLE_EXAMPLES OFF)
+        set(ENABLE_UNINSTALL OFF)
+        set(ENABLE_ZLIB OFF)
+        set(ENABLE_ZSTD OFF)
+        set(ENABLE_SNAPPY OFF)
+        set(USE_BUNDLED_UTF8PROC OFF)
         string(REPLACE " -Werror" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
         string(REPLACE " -Werror" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
         add_subdirectory(${mongo-c-driver_SOURCE_DIR} ${mongo-c-driver_BINARY_DIR})
