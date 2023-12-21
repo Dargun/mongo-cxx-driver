@@ -51,6 +51,8 @@ set(LIBMONGOC_REQUIRED_VERSION 1.25.0)
 set(LIBMONGOC_DOWNLOAD_VERSION 1.25.0)
 set(LIBMONGOC_REQUIRED_ABI_VERSION 1.0)
 
+set(NEED_ONLY_DRIVER_CODE true)
+
 set(NEED_DOWNLOAD_C_DRIVER false)
 
 if(TARGET mongoc_shared OR TARGET mongoc_static)
@@ -291,6 +293,7 @@ set(BUILD_SOURCE_DIR ${CMAKE_BINARY_DIR})
 
 include(MakeDistFiles)
 
+if(NOT NEED_ONLY_DRIVER_CODE)
 add_custom_target(hugo_dir
     COMMAND ${CMAKE_COMMAND} -E make_directory hugo
 )
@@ -346,6 +349,7 @@ add_custom_target(format-lint
 add_custom_target(docs
     DEPENDS hugo doxygen-current
 )
+endif()
 
 set(THIRD_PARTY_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src/third_party)
 set(DATA_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/data)
@@ -359,18 +363,19 @@ endif()
 
 add_subdirectory(src)
 
-#add_subdirectory(examples EXCLUDE_FROM_ALL)
+if(NOT NEED_ONLY_DRIVER_CODE)
+add_subdirectory(examples EXCLUDE_FROM_ALL)
 
-#add_subdirectory(benchmark EXCLUDE_FROM_ALL)
+add_subdirectory(benchmark EXCLUDE_FROM_ALL)
 
 # Implement 'dist' target
 #
 # CMake does not implement anything like 'dist' from autotools.
 # This implementation is based on the one in GnuCash.
-#add_subdirectory(cmake)
-#add_subdirectory(data)
-#add_subdirectory(docs)
-#add_subdirectory(etc)
+add_subdirectory(cmake)
+add_subdirectory(data)
+add_subdirectory(docs)
+add_subdirectory(etc)
 
 set(PACKAGE_PREFIX "mongo-cxx-driver-r${BUILD_VERSION}")
 set(DIST_FILE "${PACKAGE_PREFIX}.tar.gz")
@@ -492,4 +497,5 @@ endif()
 
 if(CMAKE_GENERATOR_TOOLSET)
     message(STATUS "\tinstance: ${CMAKE_GENERATOR_TOOLSET}")
+endif()
 endif()
