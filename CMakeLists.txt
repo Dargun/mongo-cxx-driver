@@ -359,18 +359,18 @@ endif()
 
 add_subdirectory(src)
 
-add_subdirectory(examples EXCLUDE_FROM_ALL)
+#add_subdirectory(examples EXCLUDE_FROM_ALL)
 
-add_subdirectory(benchmark EXCLUDE_FROM_ALL)
+#add_subdirectory(benchmark EXCLUDE_FROM_ALL)
 
 # Implement 'dist' target
 #
 # CMake does not implement anything like 'dist' from autotools.
 # This implementation is based on the one in GnuCash.
-add_subdirectory(cmake)
-add_subdirectory(data)
-add_subdirectory(docs)
-add_subdirectory(etc)
+#add_subdirectory(cmake)
+#add_subdirectory(data)
+#add_subdirectory(docs)
+#add_subdirectory(etc)
 
 set(PACKAGE_PREFIX "mongo-cxx-driver-r${BUILD_VERSION}")
 set(DIST_FILE "${PACKAGE_PREFIX}.tar.gz")
